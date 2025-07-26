@@ -20,10 +20,12 @@ export const TopicInput = ({ onGenerate, isLoading }: TopicInputProps) => {
   };
 
   const exampleTopics = [
-    "Notion AI দিয়ে আয়",
-    "CapCut Reels হ্যাক",
-    "ফ্রিল্যান্সিং টিপস",
-    "AI টুলস ২০২৪"
+    "ডিজিটাল মার্কেটিং গাইড",
+    "ওয়েব ডেভেলপমেন্ট শিখুন",
+    "ব্যবসায়ের কৌশল",
+    "AI এর ভবিষ্যৎ",
+    "অনলাইন আয়ের উপায়",
+    "স্বাস্থ্য ও ফিটনেস"
   ];
 
   return (
@@ -38,7 +40,7 @@ export const TopicInput = ({ onGenerate, isLoading }: TopicInputProps) => {
               <span className="text-lg">📝</span>
             </div>
             <label htmlFor="topic" className="text-lg font-semibold text-foreground">
-              একটি টপিক লিখুন
+              ই-বুকের টপিক লিখুন
             </label>
           </div>
           
@@ -46,7 +48,7 @@ export const TopicInput = ({ onGenerate, isLoading }: TopicInputProps) => {
             <Input
               id="topic"
               type="text"
-              placeholder="যেমন: Notion AI দিয়ে আয়..."
+              placeholder="যেমন: ডিজিটাল মার্কেটিং গাইড..."
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
               className="flex-1 h-12 bg-background/70 border-border focus:ring-primary focus:border-primary transition-all duration-200 text-base backdrop-blur-sm"
@@ -63,7 +65,7 @@ export const TopicInput = ({ onGenerate, isLoading }: TopicInputProps) => {
               ) : (
                 <Send className="h-5 w-5" />
               )}
-              <span className="ml-2">তৈরি করুন</span>
+              <span className="ml-2">ই-বুক তৈরি করুন</span>
             </Button>
           </div>
         </div>
@@ -71,7 +73,7 @@ export const TopicInput = ({ onGenerate, isLoading }: TopicInputProps) => {
         <div className="space-y-3">
           <div className="flex items-center gap-2">
             <span className="text-2xl">👉</span>
-            <p className="text-base font-medium text-muted-foreground">উদাহরণ টপিক</p>
+            <p className="text-base font-medium text-muted-foreground">উদাহরণ ই-বুক টপিক</p>
           </div>
           <div className="flex flex-wrap gap-3">
             {exampleTopics.map((example, index) => (

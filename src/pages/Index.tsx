@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { TopicInput } from '@/components/TopicInput';
-import { ThreadOutput } from '@/components/ThreadOutput';
-import { GeminiService, type ThreadResult } from '@/services/geminiService';
+import { EBookOutput } from '@/components/eBookOutput';
+import { GeminiService, type eBookResult } from '@/services/geminiService';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -14,7 +14,7 @@ const Index = () => {
   const [apiKey, setApiKey] = useState('');
   const [isApiKeySet, setIsApiKeySet] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [result, setResult] = useState<ThreadResult | null>(null);
+  const [result, setResult] = useState<eBookResult | null>(null);
   const [geminiService] = useState(() => new GeminiService());
 
   const handleSetApiKey = () => {
@@ -27,14 +27,14 @@ const Index = () => {
     }
   };
 
-  const handleGenerateThread = async (topic: string) => {
+  const handleGenerateeBook = async (topic: string) => {
     setIsLoading(true);
     setResult(null);
     
     try {
-      const threadResult = await geminiService.generateThread(topic);
-      setResult(threadResult);
-      toast.success('থ্রেড তৈরি হয়েছে!');
+      const eBookResult = await geminiService.generateeBook(topic);
+      setResult(eBookResult);
+      toast.success('ই-বুক তৈরি হয়েছে!');
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'কিছু সমস্যা হয়েছে');
     } finally {
@@ -107,11 +107,11 @@ const Index = () => {
           </Card>
         ) : (
           <>
-            <TopicInput onGenerate={handleGenerateThread} isLoading={isLoading} />
+            <TopicInput onGenerate={handleGenerateeBook} isLoading={isLoading} />
             
             {result && (
               <div className="mt-12 animate-fade-in">
-                <ThreadOutput result={result} />
+                <EBookOutput result={result} />
               </div>
             )}
           </>

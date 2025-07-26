@@ -1,42 +1,42 @@
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-export interface ThreadResult {
-  mainTweet: string;
-  threadBody: string[];
+export interface eBookResult {
+  title: string;
+  pages: string[];
   imageIdeas: string[];
 }
 
 const PROMPT_TEMPLATE = `
-আপনি একজন ভাইরাল কন্টেন্ট ক্রিয়েটর এবং সোশ্যাল মিডিয়া এক্সপার্ট। আপনার কাজ হলো "{{topic}}" টপিকের উপর একটি বিস্তারিত ভাইরাল টুইটার/X থ্রেড তৈরি করা।
+আপনি একজন দক্ষ লেখক এবং ই-বুক বিশেষজ্ঞ। আপনার কাজ হলো "{{topic}}" টপিকের উপর একটি বিস্তারিত এবং তথ্যবহুল ই-বুক তৈরি করা।
 
 নিম্নোক্ত ফরম্যাটে আউটপুট দিন:
 
-MAIN_TWEET_START
-[এখানে একটি শক্তিশালী হুক সহ বিস্তারিত মূল টুইট লিখুন (২৫০-২৮০ অক্ষর) যা মানুষকে থ্রেডটি পড়তে আগ্রহী করবে এবং একটি প্রতিশ্রুতি দেবে]
-MAIN_TWEET_END
+BOOK_TITLE_START
+[এখানে একটি আকর্ষণীয় এবং তথ্যবহুল বইয়ের শিরোনাম লিখুন যা টপিকটিকে সম্পূর্ণভাবে প্রতিফলিত করে]
+BOOK_TITLE_END
 
-THREAD_BODY_START
-[এখানে ৮-১২টি বিস্তারিত পৃথক টুইট লিখুন। প্রতিটি টুইট ২৫০-২৮০ অক্ষরের হতে হবে। প্রতিটি টুইট /// দিয়ে আলাদা করুন। প্রতিটি টুইটে গভীর তথ্য, উদাহরণ, পরিসংখ্যান বা ব্যবহারিক টিপস থাকতে হবে]
-THREAD_BODY_END
+BOOK_PAGES_START
+[এখানে ১০-১৫টি বিস্তারিত পৃষ্ঠা লিখুন। প্রতিটি পৃষ্ঠায় ৫০০-৮০০ শব্দ হতে হবে। প্রতিটি পৃষ্ঠা /// দিয়ে আলাদা করুন। প্রতিটি পৃষ্ঠায় গভীর তথ্য, উদাহরণ, পরিসংখ্যান, ব্যবহারিক টিপস এবং ধাপে ধাপে নির্দেশনা থাকতে হবে]
+BOOK_PAGES_END
 
 IMAGE_IDEAS_START
-[এখানে ৪-৬টি বিস্তারিত ইমেজ আইডিয়া দিন যা এই থ্রেডের সাথে ব্যবহার করা যাবে]
+[এখানে ৮-১০টি বিস্তারিত ইমেজ আইডিয়া দিন যা এই ই-বুকের সাথে ব্যবহার করা যাবে]
 IMAGE_IDEAS_END
 
 গুরুত্বপূর্ণ নির্দেশনা:
 - সব কন্টেন্ট বাংলায় লিখুন
-- প্রতিটি টুইট ২৫০-২৮০ অক্ষরের মধ্যে রাখুন (বেশি বিস্তারিত করুন)
-- প্রচুর ইমোজি ব্যবহার করুন আকর্ষণীয় করতে
-- প্রতিটি টুইটে পয়েন্ট আলাদা করতে নতুন লাইন ব্যবহার করুন
-- বুলেট পয়েন্ট (• বা ✅) ব্যবহার করুন
-- গুরুত্বপূর্ণ বিষয় হাইলাইট করতে ইমোজি ব্যবহার করুন
-- ভাইরাল হওয়ার জন্য হুক, কৌতূহল এবং ভ্যালু যোগ করুন
-- প্রতিটি টুইট স্বতন্ত্র অর্থপূর্ণ হতে হবে
-- বিস্তারিত তথ্য, উদাহরণ, পরিসংখ্যান এবং ব্যবহারিক টিপস দিন
-- প্রতিটি টুইটে কমপক্ষে ৩-৪টি বাক্য থাকতে হবে
-- টেক্সট পড়তে সহজ করতে যথাযথ বিরতি দিন
-- ব্যবহারিক পদক্ষেপ এবং বাস্তব উদাহরণ দিন
+- প্রতিটি পৃষ্ঠা ৫০০-৮০০ শব্দের মধ্যে রাখুন (বিস্তারিত এবং তথ্যবহুল)
+- প্রয়োজনীয় স্থানে ইমোজি ব্যবহার করুন
+- প্রতিটি পৃষ্ঠায় শিরোনাম এবং উপশিরোনাম ব্যবহার করুন
+- বুলেট পয়েন্ট (• বা ✅) এবং নাম্বার লিস্ট ব্যবহার করুন
+- গুরুত্বপূর্ণ বিষয় হাইলাইট করতে বোল্ড টেক্সট ব্যবহার করুন
+- ব্যবহারিক এবং কার্যকর তথ্য প্রদান করুন
+- প্রতিটি পৃষ্ঠা স্বতন্ত্র অধ্যায় হিসেবে কাজ করবে
+- বিস্তারিত তথ্য, উদাহরণ, কেস স্টাডি এবং ব্যবহারিক গাইড দিন
+- প্রতিটি পৃষ্ঠায় কমপক্ষে ৫-৮টি প্যারাগ্রাফ থাকতে হবে
+- টেক্সট পড়তে সহজ করতে যথাযথ বিরতি এবং ফরম্যাটিং ব্যবহার করুন
+- ধাপে ধাপে নির্দেশনা এবং বাস্তব উদাহরণ দিন
 `;
 
 export class GeminiService {
@@ -54,7 +54,7 @@ export class GeminiService {
     this.genAI = new GoogleGenerativeAI(apiKey);
   }
 
-  async generateThread(topic: string): Promise<ThreadResult> {
+  async generateeBook(topic: string): Promise<eBookResult> {
     if (!this.genAI) {
       throw new Error('Gemini API key not set. Please provide your API key.');
     }
@@ -69,21 +69,21 @@ export class GeminiService {
 
       return this.parseResponse(text);
     } catch (error) {
-      console.error('Error generating thread:', error);
-      throw new Error('থ্রেড তৈরি করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
+      console.error('Error generating eBook:', error);
+      throw new Error('ই-বুক তৈরি করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।');
     }
   }
 
-  private parseResponse(text: string): ThreadResult {
+  private parseResponse(text: string): eBookResult {
     try {
-      // Extract main tweet
-      const mainTweetMatch = text.match(/MAIN_TWEET_START\s*([\s\S]*?)\s*MAIN_TWEET_END/);
-      const mainTweet = mainTweetMatch ? mainTweetMatch[1].trim() : 'মূল টুইট তৈরি করতে সমস্যা হয়েছে';
+      // Extract book title
+      const titleMatch = text.match(/BOOK_TITLE_START\s*([\s\S]*?)\s*BOOK_TITLE_END/);
+      const title = titleMatch ? titleMatch[1].trim() : 'বইয়ের শিরোনাম তৈরি করতে সমস্যা হয়েছে';
 
-      // Extract thread body
-      const threadBodyMatch = text.match(/THREAD_BODY_START\s*([\s\S]*?)\s*THREAD_BODY_END/);
-      const threadBodyText = threadBodyMatch ? threadBodyMatch[1].trim() : '';
-      const threadBody = threadBodyText.split('///').map(tweet => tweet.trim()).filter(tweet => tweet.length > 0);
+      // Extract book pages
+      const pagesMatch = text.match(/BOOK_PAGES_START\s*([\s\S]*?)\s*BOOK_PAGES_END/);
+      const pagesText = pagesMatch ? pagesMatch[1].trim() : '';
+      const pages = pagesText.split('///').map(page => page.trim()).filter(page => page.length > 0);
 
       // Extract image ideas
       const imageIdeasMatch = text.match(/IMAGE_IDEAS_START\s*([\s\S]*?)\s*IMAGE_IDEAS_END/);
@@ -91,8 +91,8 @@ export class GeminiService {
       const imageIdeas = imageIdeasText.split('\n').map(idea => idea.trim().replace(/^[-•]\s*/, '')).filter(idea => idea.length > 0);
 
       return {
-        mainTweet,
-        threadBody: threadBody.length > 0 ? threadBody : ['থ্রেড কন্টেন্ট তৈরি করতে সমস্যা হয়েছে'],
+        title,
+        pages: pages.length > 0 ? pages : ['ই-বুক কন্টেন্ট তৈরি করতে সমস্যা হয়েছে'],
         imageIdeas: imageIdeas.length > 0 ? imageIdeas : ['ইমেজ আইডিয়া তৈরি করতে সমস্যা হয়েছে']
       };
     } catch (error) {
