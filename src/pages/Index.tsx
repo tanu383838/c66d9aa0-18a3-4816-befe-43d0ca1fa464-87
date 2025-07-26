@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { TopicInput } from '@/components/TopicInput';
-import { EBookOutput } from '@/components/eBookOutput';
-import { GeminiService, type eBookResult } from '@/services/geminiService';
+import { ContentOutput } from '@/components/ContentOutput';
+import { GeminiService, type ContentResult, type ContentType } from '@/services/geminiService';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -14,7 +14,7 @@ const Index = () => {
   const [apiKey, setApiKey] = useState('');
   const [isApiKeySet, setIsApiKeySet] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [result, setResult] = useState<eBookResult | null>(null);
+  const [result, setResult] = useState<ContentResult | null>(null);
   const [geminiService] = useState(() => new GeminiService());
 
   const handleSetApiKey = () => {
@@ -27,14 +27,17 @@ const Index = () => {
     }
   };
 
-  const handleGenerateeBook = async (topic: string) => {
+  const handleGenerateContent = async (topic: string, contentType: ContentType) => {
     setIsLoading(true);
     setResult(null);
     
     try {
-      const eBookResult = await geminiService.generateeBook(topic);
-      setResult(eBookResult);
-      toast.success('ই-বুক তৈরি হয়েছে!');
+      const contentResult = await geminiService.generateContent(topic, contentType);
+      setResult(contentResult);
+      const successMessage = contentType === 'eBook' ? 'ই-বুক তৈরি হয়েছে!' : 
+                            contentType === 'Facebook Post' ? 'ফেসবুক পোস্ট তৈরি হয়েছে!' :
+                            'ইনস্টাগ্রাম ক্যাপশন তৈরি হয়েছে!';
+      toast.success(successMessage);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'কিছু সমস্যা হয়েছে');
     } finally {
@@ -107,11 +110,11 @@ const Index = () => {
           </Card>
         ) : (
           <>
-            <TopicInput onGenerate={handleGenerateeBook} isLoading={isLoading} />
+            <TopicInput onGenerate={handleGenerateContent} isLoading={isLoading} />
             
             {result && (
               <div className="mt-12 animate-fade-in">
-                <EBookOutput result={result} />
+                <ContentOutput result={result} />
               </div>
             )}
           </>
