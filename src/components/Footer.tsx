@@ -18,15 +18,6 @@ export const Footer = () => {
             >
               Tanvir Ahamed Tonmoy
             </a>
-            <span>|</span>
-            <a 
-              href="https://lazukhasan.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:text-primary transition-colors font-medium"
-            >
-              LAZUK HASAN
-            </a>
           </div>
         </div>
       </div>
