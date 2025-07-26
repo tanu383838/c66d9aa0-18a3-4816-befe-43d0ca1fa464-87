@@ -3,7 +3,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { TopicInput } from '@/components/TopicInput';
 import { ContentOutput } from '@/components/ContentOutput';
-import { GeminiService, type ContentResult, type ContentType } from '@/services/geminiService';
+import { GeminiService, type ContentResult, type ContentType, type ContentOptions } from '@/services/geminiService';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -27,12 +27,12 @@ const Index = () => {
     }
   };
 
-  const handleGenerateContent = async (topic: string, contentType: ContentType) => {
+  const handleGenerateContent = async (topic: string, contentType: ContentType, options: ContentOptions) => {
     setIsLoading(true);
     setResult(null);
     
     try {
-      const contentResult = await geminiService.generateContent(topic, contentType);
+      const contentResult = await geminiService.generateContent(topic, contentType, options);
       setResult(contentResult);
       const successMessage = contentType === 'eBook' ? 'ই-বুক তৈরি হয়েছে!' : 
                             contentType === 'Facebook Post' ? 'ফেসবুক পোস্ট তৈরি হয়েছে!' :

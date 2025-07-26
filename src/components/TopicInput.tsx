@@ -2,23 +2,30 @@ import { useState } from 'react';
 import { Send, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ContentType } from '@/services/geminiService';
+import { ContentType, ContentOptions } from '@/services/geminiService';
 
 interface TopicInputProps {
-  onGenerate: (topic: string, contentType: ContentType) => void;
+  onGenerate: (topic: string, contentType: ContentType, options: ContentOptions) => void;
   isLoading: boolean;
 }
 
 export const TopicInput = ({ onGenerate, isLoading }: TopicInputProps) => {
   const [topic, setTopic] = useState('');
   const [contentType, setContentType] = useState<ContentType>('eBook');
+  const [wordCount, setWordCount] = useState(500);
+  const [pageCount, setPageCount] = useState(10);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (topic.trim() && contentType) {
-      onGenerate(topic.trim(), contentType);
+      const options: ContentOptions = {
+        wordCount: contentType !== 'eBook' ? wordCount : undefined,
+        pageCount: contentType === 'eBook' ? pageCount : undefined,
+      };
+      onGenerate(topic.trim(), contentType, options);
     }
   };
 
@@ -119,6 +126,58 @@ export const TopicInput = ({ onGenerate, isLoading }: TopicInputProps) => {
                 </span>
               </Button>
             </div>
+          </div>
+
+          {/* Content Options */}
+          <div className="space-y-4 pt-4 border-t border-border/50">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">⚙️</span>
+              <label className="text-base font-medium text-foreground/80">কনটেন্ট সেটিংস</label>
+            </div>
+            
+            {contentType === 'eBook' ? (
+              <div className="space-y-2">
+                <Label htmlFor="pageCount" className="text-sm font-medium text-foreground/80">
+                  পৃষ্ঠা সংখ্যা
+                </Label>
+                <div className="flex items-center gap-3">
+                  <Input
+                    id="pageCount"
+                    type="number"
+                    min="5"
+                    max="50"
+                    value={pageCount}
+                    onChange={(e) => setPageCount(Math.max(5, Math.min(50, parseInt(e.target.value) || 10)))}
+                    className="w-24 h-10 bg-background/70 border-border focus:ring-primary focus:border-primary transition-all duration-200 text-center"
+                    disabled={isLoading}
+                  />
+                  <span className="text-sm text-muted-foreground">
+                    (৫-৫০ পৃষ্ঠা)
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <Label htmlFor="wordCount" className="text-sm font-medium text-foreground/80">
+                  শব্দ সংখ্যা
+                </Label>
+                <div className="flex items-center gap-3">
+                  <Input
+                    id="wordCount"
+                    type="number"
+                    min="100"
+                    max="2000"
+                    value={wordCount}
+                    onChange={(e) => setWordCount(Math.max(100, Math.min(2000, parseInt(e.target.value) || 500)))}
+                    className="w-24 h-10 bg-background/70 border-border focus:ring-primary focus:border-primary transition-all duration-200 text-center"
+                    disabled={isLoading}
+                  />
+                  <span className="text-sm text-muted-foreground">
+                    (১০০-২০০০ শব্দ)
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

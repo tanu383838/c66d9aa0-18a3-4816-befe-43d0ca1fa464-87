@@ -145,11 +145,13 @@ export const ContentOutput = ({ result }: ContentOutputProps) => {
               <CopyButton text={pages[currentPage]} />
             </div>
             
-            {type === 'eBook' ? (
-              <FormattedPage content={pages[currentPage]} />
-            ) : (
-              <FormattedTweet content={pages[currentPage]} />
-            )}
+            <div className="prose prose-lg max-w-none">
+              {type === 'eBook' ? (
+                <FormattedPage content={pages[currentPage]} />
+              ) : (
+                <FormattedTweet content={pages[currentPage]} />
+              )}
+            </div>
           </div>
 
           {/* Navigation Controls for eBooks */}
