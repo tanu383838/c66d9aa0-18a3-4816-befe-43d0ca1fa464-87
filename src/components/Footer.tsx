@@ -11,12 +11,12 @@ export const Footer = () => {
           <div className="flex items-center gap-2">
             <span>©</span>
             <a 
-              href="https://lazukcorp.com" 
+              href="https://t.me/tanvirahamedtonmoy" 
               target="_blank" 
               rel="noopener noreferrer"
               className="hover:text-primary transition-colors font-medium"
             >
-              LAZUK CORP
+              Tanvir Ahamed Tonmoy
             </a>
             <span>|</span>
             <a 
